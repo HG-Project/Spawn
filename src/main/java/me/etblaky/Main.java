@@ -1,3 +1,5 @@
+package me.etblaky;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Main extends JavaPlugin {
 
-    public Location loc;
+    public static Location loc;
 
     public void onEnable() {
         loc = getLocationString(this.getConfig().getString("Location"));
@@ -36,7 +38,7 @@ public class Main extends JavaPlugin {
     }
 
     public String getStringLocation(Location l) {
-        return l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+        return l.getWorld().getName() + ":" + l.getX() + ":" + l.getY() + ":" + l.getZ() + ":" + l.getYaw() + ":" + l.getPitch();
     }
 
     public Location getLocationString(String s) {
@@ -44,14 +46,22 @@ public class Main extends JavaPlugin {
             return null;
         }
         final String[] parts = s.split(":");
-        if (parts.length == 4) {
+        if (parts.length == 6) {
+
             final World w = Bukkit.getServer().getWorld(parts[0]);
-            final int x = Integer.parseInt(parts[1]);
-            final int y = Integer.parseInt(parts[2]);
-            final int z = Integer.parseInt(parts[3]);
-            return new Location(w, x, y, z);
+            final double x = Double.parseDouble(parts[1]);
+            final double y = Double.parseDouble(parts[2]);
+            final double z = Double.parseDouble(parts[3]);
+            final float yaw = Float.parseFloat(parts[4]);
+            final float pitch = Float.parseFloat(parts[5]);
+
+            return new Location(w, x, y, z, yaw, pitch);
         }
         return null;
+    }
+
+    public static Location getSpawn(){
+        return loc;
     }
 
 }

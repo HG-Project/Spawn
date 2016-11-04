@@ -1,1 +1,3 @@
-Location: world:0:0:0
+# WorldName : X : Y : Z : Yaw : Picth
+
+Location: world:0.0:0.0:0.0:0.0:0.0
