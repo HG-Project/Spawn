@@ -1,0 +1,7 @@
+name: Spawn
+main: me.etblaky.Main
+version: 1.0
+
+commands:
+   spawn:
+   setSpawn:
