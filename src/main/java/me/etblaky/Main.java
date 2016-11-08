@@ -6,17 +6,24 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Created by ETblaky on 04/11/2016.
  */
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener {
 
     public static Location loc;
 
     public void onEnable() {
         loc = getLocationString(this.getConfig().getString("Location"));
+
+        Bukkit.getServer().getPluginManager().registerEvents(this, this);
+
     }
 
     @Override
@@ -62,6 +69,19 @@ public class Main extends JavaPlugin {
 
     public static Location getSpawn(){
         return loc;
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e){
+        e.getPlayer().teleport(Main.getSpawn());
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e){/*
+        if(Game.playerGame(e.getEntity()) != null) return;
+        if(Lobby.playerLobby(e.getEntity()) != null) return;*/
+
+        e.getEntity().teleport(Main.getSpawn());
     }
 
 }
